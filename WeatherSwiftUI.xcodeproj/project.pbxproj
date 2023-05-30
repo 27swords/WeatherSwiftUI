@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		491854152A2604F000EA5F29 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491854142A2604F000EA5F29 /* Extension+UIColor.swift */; };
 		4918541A2A2624AD00EA5F29 /* WaterWaveS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491854192A2624AD00EA5F29 /* WaterWaveS.swift */; };
+		491854242A2651ED00EA5F29 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491854232A2651ED00EA5F29 /* WeatherModel.swift */; };
+		491854272A265EBB00EA5F29 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491854262A265EBB00EA5F29 /* WeatherViewModel.swift */; };
 		499D5A912A24BACF00472730 /* WatherSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499D5A902A24BACF00472730 /* WatherSwiftUIApp.swift */; };
 		499D5A932A24BACF00472730 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499D5A922A24BACF00472730 /* WeatherView.swift */; };
 		499D5A952A24BAD500472730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499D5A942A24BAD500472730 /* Assets.xcassets */; };
@@ -20,6 +22,9 @@
 /* Begin PBXFileReference section */
 		491854142A2604F000EA5F29 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		491854192A2624AD00EA5F29 /* WaterWaveS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterWaveS.swift; sourceTree = "<group>"; };
+		491854202A26383700EA5F29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		491854232A2651ED00EA5F29 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		491854262A265EBB00EA5F29 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		499D5A8D2A24BACF00472730 /* WeatherSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		499D5A902A24BACF00472730 /* WatherSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatherSwiftUIApp.swift; sourceTree = "<group>"; };
 		499D5A922A24BACF00472730 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
@@ -43,6 +48,8 @@
 		491854162A26247C00EA5F29 /* WeatherScene */ = {
 			isa = PBXGroup;
 			children = (
+				491854252A265EA200EA5F29 /* ViewModel */,
+				491854222A2651DD00EA5F29 /* Model */,
 				491854182A26249F00EA5F29 /* VIew */,
 				491854172A26248500EA5F29 /* Controller */,
 			);
@@ -91,6 +98,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		491854222A2651DD00EA5F29 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				491854232A2651ED00EA5F29 /* WeatherModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		491854252A265EA200EA5F29 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				491854262A265EBB00EA5F29 /* WeatherViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		499D5A842A24BACF00472730 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +133,7 @@
 		499D5A8F2A24BACF00472730 /* WeatherSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				491854202A26383700EA5F29 /* Info.plist */,
 				4918541D2A26254D00EA5F29 /* Extensions */,
 				4918541C2A26254100EA5F29 /* CoreData */,
 				4918541B2A26252C00EA5F29 /* AppFiles */,
@@ -200,7 +224,9 @@
 				4918541A2A2624AD00EA5F29 /* WaterWaveS.swift in Sources */,
 				499D5A9D2A24BAD500472730 /* WeatherSwiftUI.xcdatamodeld in Sources */,
 				491854152A2604F000EA5F29 /* Extension+UIColor.swift in Sources */,
+				491854242A2651ED00EA5F29 /* WeatherModel.swift in Sources */,
 				499D5A9A2A24BAD500472730 /* Persistence.swift in Sources */,
+				491854272A265EBB00EA5F29 /* WeatherViewModel.swift in Sources */,
 				499D5A932A24BACF00472730 /* WeatherView.swift in Sources */,
 				499D5A912A24BACF00472730 /* WatherSwiftUIApp.swift in Sources */,
 			);
@@ -328,11 +354,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WeatherSwiftUI/WeatherSwiftUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeatherSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -356,11 +384,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WeatherSwiftUI/WeatherSwiftUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeatherSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

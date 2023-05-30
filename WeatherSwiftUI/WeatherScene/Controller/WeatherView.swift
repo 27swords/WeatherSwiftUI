@@ -11,9 +11,10 @@ import CoreData
 struct WeatherView: View {
     
     //MARK: - Inits
-    @State var sliderProgress: CGFloat = 0.5
     @State var startAnimation: CGFloat = 0
-    
+    @State private var temperature: Double?
+    private let weatherViewModel = WeatherViewModel()
+
     //MARK: - Views
     var body: some View {
         let waveGradient = LinearGradient(gradient: Gradient(colors: [
@@ -42,7 +43,7 @@ struct WeatherView: View {
                 
                 ZStack(alignment: .top) {
                     VStack {
-                        Text("Жлобин")
+                        Text("Minsk")
                             .font(.system(size: 55))
                             .fontWeight(.bold)
                             .foregroundColor(Color(UIColor(hex: "#3c6382")).opacity(0.6))
@@ -51,7 +52,7 @@ struct WeatherView: View {
                             .minimumScaleFactor(0.1)
                             .padding(.top, 10)
                         
-                        Text("Облачно")
+                        Text("Sunny")
                             .font(.system(size: 30))
                             .fontWeight(.bold)
                             .foregroundColor(Color(UIColor(hex: "#3c6382")).opacity(0.6)).opacity(0.8)
@@ -68,13 +69,19 @@ struct WeatherView: View {
                 }
                 
                 ZStack(alignment: .leading) {
-                    Text("\(Int((sliderProgress * 30) + 20))°")
+                    Text("\(Int(temperature ?? 0))°")
                         .font(.system(size: 80))
                         .fontWeight(.bold)
                         .foregroundColor(.white).opacity(0.8)
                         .multilineTextAlignment(.trailing)
                         .padding(.top, -240)
                         .padding(.leading, 100)
+                        .onAppear {
+                            weatherViewModel.fetchWeather { result in
+                                self.temperature = result
+                            }
+                        }
+                    
                     
                     //thermometer capsule
                     RoundedRectangle(cornerRadius: 20)
@@ -92,14 +99,14 @@ struct WeatherView: View {
                         .offset(x: 50)
                     
                     //the first wave
-                    WaterWaveS(progress: sliderProgress, waveHeight: 0.04, offset: startAnimation + 190)
+                    WaterWaveS(progress: CGFloat(temperature ?? 0) / 100, waveHeight: 0.04, offset: startAnimation + 190)
                         .fill(waveGradient)
                         .frame(width: 96, height: 456)
                         .mask(RoundedRectangle(cornerRadius: 48))
                         .opacity(0.5)
 
                     //the second wave
-                    WaterWaveS(progress: sliderProgress, waveHeight: 0.04, offset: startAnimation)
+                    WaterWaveS(progress: CGFloat(temperature ?? 0) / 100, waveHeight: 0.04, offset: startAnimation)
                         .fill(waveGradient)
                         .frame(width: 96, height: 456)
                         .mask(RoundedRectangle(cornerRadius: 48))
