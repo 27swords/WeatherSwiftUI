@@ -7,36 +7,62 @@
 
 import Foundation
 
-// MARK: - WeatherResponse
-struct WeatherResponse: Codable {
-    let latitude: Double
-    let longitude: Int
-    let generationtimeMS: Double
-    let utcOffsetSeconds: Int
-    let timezone, timezoneAbbreviation: String
-    let elevation: Int
-    let currentWeather: CurrentWeather
+// MARK: - Weather
+struct Weather: Codable {
+    let coord: Coord?
+    let weather: [WeatherElement]?
+    let base: String?
+    let main: Main?
+    let visibility: Int?
+    let wind: Wind?
+    let clouds: Clouds?
+    let dt: Int?
+    let sys: Sys?
+    let timezone, id: Int?
+    let name: String?
+    let cod: Int?
+}
+
+// MARK: - Clouds
+struct Clouds: Codable {
+    let all: Int?
+}
+
+// MARK: - Coord
+struct Coord: Codable {
+    let lon, lat: Double?
+}
+
+// MARK: - Main
+struct Main: Codable {
+    let temp, feelsLike, tempMin, tempMax: Double?
+    let pressure, humidity: Int?
 
     enum CodingKeys: String, CodingKey {
-        case latitude, longitude
-        case generationtimeMS = "generationtime_ms"
-        case utcOffsetSeconds = "utc_offset_seconds"
-        case timezone
-        case timezoneAbbreviation = "timezone_abbreviation"
-        case elevation
-        case currentWeather = "current_weather"
+        case temp
+        case feelsLike = "feels_like"
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure, humidity
     }
 }
 
-// MARK: - CurrentWeather
-struct CurrentWeather: Codable {
-    let temperature, windspeed: Double
-    let winddirection, weathercode, isDay: Int
-    let time: String
-
-    enum CodingKeys: String, CodingKey {
-        case temperature, windspeed, winddirection, weathercode
-        case isDay = "is_day"
-        case time
-    }
+// MARK: - Sys
+struct Sys: Codable {
+    let type, id: Int?
+    let country: String?
+    let sunrise, sunset: Int?
 }
+
+// MARK: - WeatherElement
+struct WeatherElement: Codable {
+    let id: Int?
+    let main, description, icon: String?
+}
+
+// MARK: - Wind
+struct Wind: Codable {
+    let speed: Double?
+    let deg: Int?
+}
+

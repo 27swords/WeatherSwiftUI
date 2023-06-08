@@ -11,10 +11,12 @@ import CoreData
 struct WeatherView: View {
     
     //MARK: - Inits
+    private let weatherViewModel = WeatherViewModel()
     @State var startAnimation: CGFloat = 0
     @State private var temperature: Double?
-    private let weatherViewModel = WeatherViewModel()
-
+    @State private var cityName: String?
+    @State private var weatherDescription: String?
+    
     //MARK: - Views
     var body: some View {
         let waveGradient = LinearGradient(gradient: Gradient(colors: [
@@ -30,7 +32,7 @@ struct WeatherView: View {
             Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.8),
             Color(red: 0.93, green: 0.94, blue: 0.97, opacity: 1)
         ]), startPoint: .top, endPoint: .bottom)
-                
+        
         ZStack {
             Image("backgroundImage")
                 .resizable()
@@ -43,7 +45,8 @@ struct WeatherView: View {
                 
                 ZStack(alignment: .top) {
                     VStack {
-                        Text("Minsk")
+                        //Name of the city
+                        Text(cityName ?? "cityName")
                             .font(.system(size: 55))
                             .fontWeight(.bold)
                             .foregroundColor(Color(UIColor(hex: "#3c6382")).opacity(0.6))
@@ -52,7 +55,8 @@ struct WeatherView: View {
                             .minimumScaleFactor(0.1)
                             .padding(.top, 10)
                         
-                        Text("Sunny")
+                        //description of the weather
+                        Text(weatherDescription ?? "weatherDescription")
                             .font(.system(size: 30))
                             .fontWeight(.bold)
                             .foregroundColor(Color(UIColor(hex: "#3c6382")).opacity(0.6)).opacity(0.8)
@@ -65,23 +69,17 @@ struct WeatherView: View {
                             .frame(width: size.width, height: 5)
                     }
                     .frame(width: size.width, height: size.height, alignment: .top)
-                    
                 }
                 
+                //temperature celsius
                 ZStack(alignment: .leading) {
-                    Text("\(Int(temperature ?? 0))°")
+                    Text("\(Int(temperature?.toCelsius() ?? 0))°")
                         .font(.system(size: 80))
                         .fontWeight(.bold)
                         .foregroundColor(.white).opacity(0.8)
                         .multilineTextAlignment(.trailing)
                         .padding(.top, -240)
                         .padding(.leading, 100)
-                        .onAppear {
-                            weatherViewModel.fetchWeather { result in
-                                self.temperature = result
-                            }
-                        }
-                    
                     
                     //thermometer capsule
                     RoundedRectangle(cornerRadius: 20)
@@ -99,19 +97,19 @@ struct WeatherView: View {
                         .offset(x: 50)
                     
                     //the first wave
-                    WaterWaveS(progress: CGFloat(temperature ?? 0) / 100, waveHeight: 0.04, offset: startAnimation + 190)
+                    WaterWave(progress: CGFloat(temperature?.toCelsius() ?? 0) / 100, waveHeight: 0.04, offset: startAnimation + 190)
                         .fill(waveGradient)
                         .frame(width: 96, height: 456)
                         .mask(RoundedRectangle(cornerRadius: 48))
                         .opacity(0.5)
-
+                    
                     //the second wave
-                    WaterWaveS(progress: CGFloat(temperature ?? 0) / 100, waveHeight: 0.04, offset: startAnimation)
+                    WaterWave(progress: CGFloat(temperature?.toCelsius() ?? 0) / 100, waveHeight: 0.04, offset: startAnimation)
                         .fill(waveGradient)
                         .frame(width: 96, height: 456)
                         .mask(RoundedRectangle(cornerRadius: 48))
                         .opacity(0.5)
-
+                    
                     //the outline of the thermometer
                     RoundedRectangle(cornerRadius: 48)
                         .strokeBorder(strokeGradient, lineWidth: 6)
@@ -126,7 +124,7 @@ struct WeatherView: View {
                         .opacity(0.5)
                         .blendMode(.overlay)
                         .offset(x: 67, y: 20)
-
+                    
                     //second reflection
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.white)
@@ -143,12 +141,18 @@ struct WeatherView: View {
                     withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: false)) {
                         startAnimation = size.width
                     }
+                    //Fetching data
+                    weatherViewModel.fetchWeather { temp, name, description in
+                        self.temperature = temp
+                        self.cityName = name
+                        self.weatherDescription = description
+                    }
                 }
             }
         }
     }
 }
-    
+
 //MARK: - ContentView_Previews
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
